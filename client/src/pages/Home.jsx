@@ -1,15 +1,15 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import Sidenavbar from '../components/Sidenavbar'
-import Homepage from '../components/Home'
+import Navbar from '../components/Navbar1'
+import Sidenavbar from '../components/Sidebar'
+import Homepage from '../components/Profile'
 
 function pageHome() {
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div className='flex '>
-                <Sidenavbar/>
-                <Homepage/>
+                <Sidenavbar />
+                <Homepage />
             </div>
         </div>
     )
