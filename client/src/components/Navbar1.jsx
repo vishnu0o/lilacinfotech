@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { RiArrowDownFill, RiArrowDropDownFill } from 'react-icons/ri';
+import { AiOutlineMenu,AiOutlineClose } from 'react-icons/ai';
 import MobileSidebar from '../components/MobileSidebar';
 function Navbar() {
     const [mobile,setmobile]=useState(false)
@@ -40,8 +41,11 @@ function Navbar() {
                     </div>
                     </div>
                     <div className='pl-5'>
-                    <img onClick={()=>setmobile(!mobile)} class="h-11 w-11 sm:hidden rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
+                    {!mobile ? (
 
+                        <AiOutlineMenu className='h-8 w-8' onClick={()=>setmobile(!mobile)} />
+                    ):  <AiOutlineClose className='h-8 w-8' onClick={()=>setmobile(!mobile)} /> 
+                    }
                     </div>
 
                 </div>
