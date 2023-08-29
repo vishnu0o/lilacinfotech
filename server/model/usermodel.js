@@ -1,14 +1,10 @@
 const mongoose = require('mongoose')
 const User = new mongoose.Schema({
-    firstname:{
+    name:{
         type:String,
         required:true
     },
-    secondname:{
-        type:String,
-        required:true
-    },
-
+    
     email:{
         type:String,
         required:true,
@@ -17,18 +13,9 @@ const User = new mongoose.Schema({
 
     password:{
         type:String,
-    },
-
-    image:{
-        type:String,
-        default:''
-        
-    },
-    isadmin:{
-        type:String,
-        default:'false'
     }
 
+    
     
 })
 const model = mongoose.model('userdata',User)

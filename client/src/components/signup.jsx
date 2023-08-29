@@ -1,13 +1,62 @@
-import React from 'react'
-import userAxios from '../Axios/user'
+import React, { useState } from 'react'
+import { createuser } from '../services/Apiservices'
+import { Toaster, toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+
+
+
 
 function signup() {
 
-    return (
+	const [name, setname] = useState('')
+	const [email, setemail] = useState('')
+	const [password, setpassword] = useState('')
+	const [repassword, setRepassword] = useState('')
+	const [isChecked, setIsChecked] = useState(false);
+	const navigate = useNavigate()
 
-       
+	///////// Register ////////
 
-        <div className="flex flex-col lg:flex-row h-screen relative">
+	const registeruser = async (e) => {
+		e.preventDefault()
+		const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		if (!name.trim() || !email.trim() || !password.trim()) {
+			toast.error('Please enter all fields')
+		}
+		else if (!email.match(emailRegex)) {
+			toast.error("Please enter a valid email address");
+			return;
+		}
+		else if (password.length < 4) {
+			toast.error("Password should be at least 6 characters long");
+			return;
+		}
+		else if (repassword != password) {
+			toast.error('Password not match')			
+		}
+		else if(isChecked==false){
+			toast.error('Accept terms & conditions')
+		}
+		else {
+			const userData = {
+				name,
+				email,
+				password
+			}
+			const createusers = await createuser(userData)
+			if (createusers.status) {
+				toast.success("Account is Created")
+				navigate('/login')
+			}
+			else {
+				toast.error(createusers.error)
+			}
+		}
+	}
+	return (
+
+		<div className="flex flex-col lg:flex-row h-screen relative">
+			<Toaster />
 			<div className="lg:w-2/3 overflow-hidden">
 				<div
 					className="h-full bg-cover bg-center  md:h-screen"
@@ -50,6 +99,7 @@ function signup() {
 
 				<form
 					action=""
+					onSubmit={registeruser}
 					className="mt-4 md:p-0 p-2 f md:pl-4 w-[320px] md:w-fit space-y-2"
 				>
 					<div className="relative md:w-96 ">
@@ -58,6 +108,7 @@ function signup() {
 						</label>
 						<br />
 						<input
+							onChange={(e) => setname(e.target.value)}
 							placeholder="Name"
 							className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
 							type="text"
@@ -69,6 +120,7 @@ function signup() {
 						</label>
 						<br />
 						<input
+							onChange={(e) => setemail(e.target.value)}
 							placeholder="Email"
 							className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
 							type="text"
@@ -80,6 +132,7 @@ function signup() {
 						</label>
 						<br />
 						<input
+							onChange={(e) => setpassword(e.target.value)}
 							placeholder="Password"
 							className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
 							type="password"
@@ -91,13 +144,19 @@ function signup() {
 						</label>
 						<br />
 						<input
+							onChange={(e) => setRepassword(e.target.value)}
 							placeholder="Re-Password"
 							className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
 							type="password"
 						/>
 					</div>
 					<div className="flex">
-						<input type="checkbox" />
+						<input
+							className="w-4 shadow-sm form-checkbox border border-blue-500"
+							type="checkbox"
+							checked={isChecked}
+							onChange={() => setIsChecked(!isChecked)}
+						/>
 						<div className="pl-2 text-slate-400 font-semibold my-2">
 							I Accept all The{" "}
 							<span className="text-red-500 font-semibold">
@@ -105,7 +164,7 @@ function signup() {
 							</span>
 						</div>
 					</div>
-					<button className="text-center h-12 w-full pt-3 bg-blue-950 text-white py-4 rounded-lg font-bold">
+					<button type='submit' className="text-center h-12 w-full pt-3 bg-blue-950 text-white py-4 rounded-lg font-bold">
 						Signup
 					</button>
 					<div className="relative">
@@ -139,12 +198,12 @@ function signup() {
 				</div>
 				<div className="w-full text-center  md:pl-6 pb-2 md:pt-3">
 					Already registered?
-					<span className="text-red-500 font-semibold">Login Now</span>
+					<span onClick={()=>navigate('/login')} className="text-red-500 font-semibold cursor-pointer">Login Now</span>
 				</div>
 			</div>
 		</div>
 
-    )
+	)
 }
 
 export default signup

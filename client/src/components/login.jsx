@@ -1,10 +1,53 @@
-import React from 'react'
-import userAxios from '../Axios/user'
+import React, { useState } from 'react'
+import { loginuser } from '../services/Apiservices'
+import { useDispatch } from 'react-redux';
+import { clientLogin } from '../Redux/client';
+import { useNavigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast'
+
+
 
 function login() {
 
+    const [email, setemail] = useState('')
+    const [password, setpassword] = useState('')
+    const dispatCh = useDispatch();
+    const navigate = useNavigate()
+
+
+    const userlogin = async (e) => {
+        e.preventDefault()
+        console.log("KKGLGLGLGL")
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        if (!email.trim() || !password.trim()) {
+            toast.error("Please enter all the fields")
+        }
+        else {
+            const userData = {
+                email,
+                password
+            }
+            const login = await loginuser(userData)
+            if (login.status) {
+                dispatCh(
+                    clientLogin({
+                        token: userdetails.user,
+                        username: userdetails.username,
+                        _id: userdetails._id,
+                        userdetails: userdetails.userdetails
+                    })
+                )
+                navigate('/home')
+            }
+            else {
+                toast.error(login.error)
+            }
+        }
+    }
+
     return (
         <div className="flex flex-col lg:flex-row h-screen relative">
+            <Toaster />
             <div className="lg:w-2/3 overflow-hidden">
                 <div
                     className="h-full bg-cover bg-center  md:h-screen"
@@ -46,6 +89,7 @@ function login() {
                 </div>
 
                 <form
+                    onSubmit={userlogin}
                     action=""
                     className="mt-4 md:p-0 p-2 f md:pl-4 w-[320px] md:w-fit space-y-2"
                 >
@@ -56,6 +100,7 @@ function login() {
                         </label>
                         <br />
                         <input
+                            onChange={(e)=>setemail(e.target.value)}
                             className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
                             type="text"
                         />
@@ -67,6 +112,7 @@ function login() {
                         </label>
                         <br />
                         <input
+                            onChange={(e)=>setpassword(e.target.value)}
                             className="pl-4 placeholder border-2 border-gray-300 w-full h-14 rounded-lg"
                             type="password"
                         />
@@ -80,9 +126,7 @@ function login() {
 
 
                     </div>
-
-
-                    <button className="text-center h-12 w-full pt-3 bg-blue-950 text-white py-4 rounded-lg font-bold">
+                    <button type='submit' className="text-center h-12 w-full pt-3 bg-blue-950 text-white py-4 rounded-lg font-bold">
                         Login
                     </button>
                     <div className="relative md:hidden">
@@ -91,7 +135,7 @@ function login() {
                             src="images/google.png"
                             alt=""
                         />
-                        <button className="text-center h-14 w-full pt-3 bg-white border-2 border-gray-300 shadow-sm text-gray-500 py-4 rounded-lg font-bold">
+                        <button type='button' className="text-center h-14 w-full pt-3 bg-white border-2 border-gray-300 shadow-sm text-gray-500 py-4 rounded-lg font-bold">
                             Login with Google
                         </button>
                     </div>
@@ -99,7 +143,7 @@ function login() {
                 </form>
                 <div className='pt-3'>
                     <div className='text-center '>Not Registered?</div>
-                    <div className='text-red-500 text-center font-bold'>Create an Account Now</div>
+                    <div onClick={() => navigate('/')} className='cursor-pointer text-red-500 text-center font-bold'>Create an Account Now</div>
                 </div>
                 <div className="md:flex flex pt-5 pb-10 ">
                     <input

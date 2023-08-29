@@ -10,7 +10,7 @@ app.use(express.json())
 
 app.use('/',userRoute)
 
-mongoose.connect('mongodb://127.0.0.1:27017/test')
+mongoose.connect('mongodb://127.0.0.1:27017/testuser')
 app.listen(3000,()=>{
     console.log('server started')
 })
