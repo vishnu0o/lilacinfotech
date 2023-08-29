@@ -17,3 +17,12 @@ export const loginuser = async(userdata)=>{
         console.log(error)
     }
 }
+export const addstudents = async(userdata)=>{
+    try{
+        const response = await userAxios.post('/addstudent',userdata)
+        return response.data 
+    }
+    catch(error){
+        console.log(error)
+    }
+}

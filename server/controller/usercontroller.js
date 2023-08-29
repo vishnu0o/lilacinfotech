@@ -1,4 +1,5 @@
 const userModel = require('../model/usermodel')
+const studentsmodel = require('../model/studentsmodel')
 const bcrypt = require('bcrypt')
 const auth = require('../Middleware/auth')
 
@@ -59,8 +60,39 @@ const login = async (req, res) => {
 
 }
 
+const addstudent =async(req,res)=>{
+    try{
+        const imageFile = req.files['image'][0];
+        const {name,dob,phonenumber,secondarynumber,country,nationality,gender,maritalstatus,email} = req.body
+        const createstudents = await studentsmodel.create({
+            name:name,
+            dob:dob,
+            email:email,
+            phonenumber:phonenumber,
+            secondarynumber:secondarynumber,
+            country:country,
+            nationality:nationality,
+            gender:gender,
+            maritalstatus:maritalstatus,
+            images:imageFile.filename
+
+        })
+        if(createstudents){
+            res.json({status:true})
+        }
+        else{
+            res.json({status:false})
+        }
+   }
+    catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+
+}
+
 
 module.exports={
     Register,
-    login
+    login,
+    addstudent
 }
