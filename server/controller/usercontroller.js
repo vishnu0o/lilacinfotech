@@ -36,9 +36,11 @@ const login = async (req, res) => {
     try {
 
         let {email,password} = req.body
+        console.log(email)
         const finduser = await userModel.findOne({ email:email })
+        console.log(finduser.password,'_+_+_+')
         if (finduser) {
-            const matchpasswd = bcrypt.compare(password, finduser.password)
+            const matchpasswd =await bcrypt.compare(password, finduser.password)
             if (matchpasswd == true) {
                 const token = auth.generatetoken(finduser)
                 res.json({ status: true, user: token, username: finduser.name, userdetails: finduser})

@@ -17,7 +17,6 @@ function login() {
 
     const userlogin = async (e) => {
         e.preventDefault()
-        console.log("KKGLGLGLGL")
         const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         if (!email.trim() || !password.trim()) {
             toast.error("Please enter all the fields")
@@ -31,10 +30,10 @@ function login() {
             if (login.status) {
                 dispatCh(
                     clientLogin({
-                        token: userdetails.user,
-                        username: userdetails.username,
-                        _id: userdetails._id,
-                        userdetails: userdetails.userdetails
+                        token: login.user,
+                        username: login.username,
+                        _id: login._id,
+                        userdetails: login.userdetails
                     })
                 )
                 navigate('/home')
