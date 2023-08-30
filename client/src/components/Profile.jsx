@@ -389,7 +389,7 @@ function Profile() {
           </div>
         </div>
         <div className="pt-8 pl-2 pb-2">
-          <button type="submit" className="bg-blue-950 w-full sm:w-fit rounded-lg px-16 font-bold py-3 text-sm text-white">Update profile</button>
+          <button type="submit" className="bg-blue-950 w-full sm:w-fit rounded-lg px-16 font-bold py-3 text-sm text-white">Add student</button>
         </div>
       </form>
     </div>
