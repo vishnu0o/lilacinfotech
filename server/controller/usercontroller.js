@@ -88,11 +88,30 @@ const addstudent =async(req,res)=>{
         res.status(500).json({ error: error.message })
     }
 
+
+}
+
+
+const listuser = async(req,res)=>{
+    try{
+        console.log("llll")
+        const students = await studentsmodel.find({})
+        if(students){
+            res.json({status:true,students})
+        }
+        else{
+            res.json({status:false})
+        }
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message })
+    }
 }
 
 
 module.exports={
     Register,
     login,
-    addstudent
+    addstudent,
+    listuser
 }

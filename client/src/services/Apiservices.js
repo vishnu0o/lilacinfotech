@@ -26,3 +26,12 @@ export const addstudents = async(userdata)=>{
         console.log(error)
     }
 }
+export const liststudents = async()=>{
+    try{
+        const response = await userAxios.get('/liststudents')
+        return response.data
+    }
+    catch(error){
+        console.log(error)
+    }
+}

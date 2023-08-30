@@ -335,7 +335,7 @@ function Profile() {
 
             </div>
             {/* 2 */}
-            <div className="relative hidden sm:block md:w-96 md:ml-10 ">
+            <div className="relative sm:block md:w-96 md:ml-10 ">
               <label htmlFor="" className="bg-white font-semibold absolute top-3  left-3 px-2">
                 Marital Status <span className="text-red-500">*</span>
               </label>

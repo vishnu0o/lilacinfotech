@@ -40,7 +40,7 @@ function Navbar() {
 
                     </div>
                     </div>
-                    <div className='pl-5'>
+                    <div className='pl-5 md:hidden'>
                     {!mobile ? (
 
                         <AiOutlineMenu className='h-8 w-8' onClick={()=>setmobile(!mobile)} />
