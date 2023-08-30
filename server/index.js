@@ -8,11 +8,12 @@ const userRoute = require('./Routes/userroutes')
 app.use(cors())
 app.use(express.json())
 app.use(express.static('public'));
+const env = require('dotenv').config();
 
 
 app.use('/',userRoute)
 
-mongoose.connect('mongodb://127.0.0.1:27017/testuser')
-app.listen(3000,()=>{
+mongoose.connect(process.env.url)
+app.listen(process.env.port,()=>{
     console.log('server started')
 })
